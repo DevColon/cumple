@@ -25,9 +25,9 @@
             display: block
         }
 
-        h1 {
+        #header {
             position: absolute;
-            top: 40%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: calc(100% - 100px);
@@ -51,13 +51,43 @@
 </head>
 
 <body>
-    <h1>
+    <audio hidden id="myaudio">
+        <source src="https://drive.google.com/file/d/1kGC0Ebel0VJr-C35PSHKxqNPWC44Ew-0/view?usp=share_link"
+            type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    <div id="header">
         <span>Happy Birthday</span>
         <br>
         <span>Frentua 🐁</span>
-    </h1>
+        <br>
+        <span id="play" onclick="playAudio();" style="font-size: 2rem;">Click me!</span>
+    </div>
     <canvas id="birthday"></canvas>
 </body>
+<script>
+    function playAudio() {
+        // Check for audio element support.
+        if (window.HTMLAudioElement) {
+            try {
+                var oAudio = document.getElementById('myaudio');
+                var btn = document.getElementById('play');
+
+                // Tests the paused attribute and set state.
+                if (oAudio.paused) {
+                    oAudio.play();
+                    btn.textContent = "Pause";
+                } else {
+                    oAudio.pause();
+                    btn.textContent = "Play";
+                }
+            }
+            catch (e) {
+                // Fail silently but show in F12 developer tools console
+                if (window.console && console.error("Error:" + e));
+            }
+        }
+    }</script>
 <script>// helper functions
     const PI2 = Math.PI * 2
     const random = (min, max) => Math.random() * (max - min + 1) + min | 0
